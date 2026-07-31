@@ -14,6 +14,7 @@ import { StatCard } from "@/components/app-shell";
 import { EmptyState, ErrorState, ListSkeleton, PageHeader } from "@/components/page-header";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import {
   companyEngagementsQuery,
@@ -22,7 +23,6 @@ import {
   myBookmarksQuery,
   myCompanyQuery,
   myEngagementsQuery,
-  projectApplicationsQuery,
 } from "@/lib/queries";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
@@ -193,7 +193,7 @@ function CompanyDashboard() {
       if (error) throw error;
       return {
         total: (data ?? []).length,
-        pending: (data ?? []).filter((a) => a.status === "pending").length,
+        pending: (data ?? []).filter((a: { status: string }) => a.status === "pending").length,
       };
     },
   });
