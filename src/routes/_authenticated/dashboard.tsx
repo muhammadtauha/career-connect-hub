@@ -180,24 +180,24 @@ function CompanyDashboard() {
     enabled: Boolean(companyId),
   });
 
+  const projectIds = (projects.data ?? []).map((p) => p.id);
   const applicationQueries = useQuery({
-    queryKey: ["applications", "company-count", companyId],
+    queryKey: ["applications", "company-count", companyId, projectIds.length],
     enabled: Boolean(companyId) && Boolean(projects.data),
     queryFn: async () => {
-      const results = await Promise.all(
-        (projects.data ?? []).map(async (project) => {
-          const { queryFn } = projectApplicationsQuery(project.id);
-          const rows = await (queryFn as () => Promise<{ status: string }[]>)();
-          return rows;
-        }),
-      );
-      const flat = results.flat();
+      if (projectIds.length === 0) return { total: 0, pending: 0 };
+      const { data, error } = await supabase
+        .from("applications")
+        .select("status")
+        .in("project_id", projectIds);
+      if (error) throw error;
       return {
-        total: flat.length,
-        pending: flat.filter((a) => a.status === "pending").length,
+        total: (data ?? []).length,
+        pending: (data ?? []).filter((a) => a.status === "pending").length,
       };
     },
   });
+
 
   if (company.isPending) return <ListSkeleton rows={2} />;
 
