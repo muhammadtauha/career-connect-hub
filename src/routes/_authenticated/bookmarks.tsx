@@ -28,6 +28,7 @@ function BookmarksPage() {
   const { userId } = useAuth();
   const bookmarks = useQuery(myBookmarksQuery(userId!));
   const { toggle } = useBookmarks(userId);
+  const projects = (bookmarks.data ?? []).flatMap((row) => (row.project ? [row.project] : []));
 
   return (
     <div className="space-y-6">
@@ -36,7 +37,7 @@ function BookmarksPage() {
         <ListSkeleton rows={3} />
       ) : bookmarks.isError ? (
         <ErrorState message={(bookmarks.error as Error).message} onRetry={bookmarks.refetch} />
-      ) : bookmarks.data.length === 0 ? (
+      ) : projects.length === 0 ? (
         <EmptyState
           icon={<Bookmark className="size-5" />}
           title="Nothing saved yet"
@@ -49,7 +50,7 @@ function BookmarksPage() {
         />
       ) : (
         <div className="grid gap-3">
-          {bookmarks.data.map((project) => (
+          {projects.map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
