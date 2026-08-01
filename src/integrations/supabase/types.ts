@@ -84,47 +84,68 @@ export type Database = {
       companies: {
         Row: {
           approved: boolean
+          banner_url: string | null
           company_size: string | null
+          contact_email: string | null
           created_at: string
           description: string | null
+          founded_year: number | null
+          hiring: boolean
           id: string
           industry: string | null
           location: string | null
           logo_url: string | null
           name: string
           owner_id: string
+          phone: string | null
           slug: string | null
+          suspended: boolean
           updated_at: string
+          verified: boolean
           website: string | null
         }
         Insert: {
           approved?: boolean
+          banner_url?: string | null
           company_size?: string | null
+          contact_email?: string | null
           created_at?: string
           description?: string | null
+          founded_year?: number | null
+          hiring?: boolean
           id?: string
           industry?: string | null
           location?: string | null
           logo_url?: string | null
           name: string
           owner_id: string
+          phone?: string | null
           slug?: string | null
+          suspended?: boolean
           updated_at?: string
+          verified?: boolean
           website?: string | null
         }
         Update: {
           approved?: boolean
+          banner_url?: string | null
           company_size?: string | null
+          contact_email?: string | null
           created_at?: string
           description?: string | null
+          founded_year?: number | null
+          hiring?: boolean
           id?: string
           industry?: string | null
           location?: string | null
           logo_url?: string | null
           name?: string
           owner_id?: string
+          phone?: string | null
           slug?: string | null
+          suspended?: boolean
           updated_at?: string
+          verified?: boolean
           website?: string | null
         }
         Relationships: []
@@ -229,60 +250,135 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          link: string | null
+          read: boolean
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          title: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          availability: string
           avatar_url: string | null
           bio: string | null
+          certifications: Json
+          contact_email: string | null
+          cover_url: string | null
           created_at: string
           cv_url: string | null
           degree: string | null
+          department: string | null
+          experience: Json
           full_name: string
           github_url: string | null
           graduation_year: number | null
           headline: string | null
           id: string
+          languages: string[]
           linkedin_url: string | null
           location: string | null
+          phone: string | null
+          portfolio: Json
           portfolio_url: string | null
+          semester: number | null
           skills: string[]
+          soft_skills: string[]
+          suspended: boolean
           university: string | null
           updated_at: string
+          verified: boolean
         }
         Insert: {
+          availability?: string
           avatar_url?: string | null
           bio?: string | null
+          certifications?: Json
+          contact_email?: string | null
+          cover_url?: string | null
           created_at?: string
           cv_url?: string | null
           degree?: string | null
+          department?: string | null
+          experience?: Json
           full_name?: string
           github_url?: string | null
           graduation_year?: number | null
           headline?: string | null
           id: string
+          languages?: string[]
           linkedin_url?: string | null
           location?: string | null
+          phone?: string | null
+          portfolio?: Json
           portfolio_url?: string | null
+          semester?: number | null
           skills?: string[]
+          soft_skills?: string[]
+          suspended?: boolean
           university?: string | null
           updated_at?: string
+          verified?: boolean
         }
         Update: {
+          availability?: string
           avatar_url?: string | null
           bio?: string | null
+          certifications?: Json
+          contact_email?: string | null
+          cover_url?: string | null
           created_at?: string
           cv_url?: string | null
           degree?: string | null
+          department?: string | null
+          experience?: Json
           full_name?: string
           github_url?: string | null
           graduation_year?: number | null
           headline?: string | null
           id?: string
+          languages?: string[]
           linkedin_url?: string | null
           location?: string | null
+          phone?: string | null
+          portfolio?: Json
           portfolio_url?: string | null
+          semester?: number | null
           skills?: string[]
+          soft_skills?: string[]
+          suspended?: boolean
           university?: string | null
           updated_at?: string
+          verified?: boolean
         }
         Relationships: []
       }
@@ -348,6 +444,57 @@ export type Database = {
           },
         ]
       }
+      reviews: {
+        Row: {
+          comment: string
+          created_at: string
+          engagement_id: string
+          id: string
+          rating: number
+          reviewer_id: string
+          subject_company_id: string | null
+          subject_user_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          comment?: string
+          created_at?: string
+          engagement_id: string
+          id?: string
+          rating: number
+          reviewer_id: string
+          subject_company_id?: string | null
+          subject_user_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          comment?: string
+          created_at?: string
+          engagement_id?: string
+          id?: string
+          rating?: number
+          reviewer_id?: string
+          subject_company_id?: string | null
+          subject_user_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_engagement_id_fkey"
+            columns: ["engagement_id"]
+            isOneToOne: false
+            referencedRelation: "engagements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_subject_company_id_fkey"
+            columns: ["subject_company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -385,12 +532,23 @@ export type Database = {
         }
         Returns: boolean
       }
+      notify: {
+        Args: {
+          _body: string
+          _link: string
+          _title: string
+          _type: string
+          _user_id: string
+        }
+        Returns: undefined
+      }
       owns_company: { Args: { _company_id: string }; Returns: boolean }
       owns_engagement_company: {
         Args: { _engagement_id: string }
         Returns: boolean
       }
       owns_project: { Args: { _project_id: string }; Returns: boolean }
+      project_owner: { Args: { _project_id: string }; Returns: string }
     }
     Enums: {
       app_role: "student" | "company" | "university" | "qa" | "admin"

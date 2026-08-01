@@ -15,10 +15,14 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
 import { Route as AuthenticatedBookmarksRouteImport } from './routes/_authenticated/bookmarks'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedCompaniesIndexRouteImport } from './routes/_authenticated/companies.index'
 import { Route as AuthenticatedCompanyIndexRouteImport } from './routes/_authenticated/company.index'
 import { Route as AuthenticatedProjectsIndexRouteImport } from './routes/_authenticated/projects.index'
 import { Route as AuthenticatedProjectsProjectIdRouteImport } from './routes/_authenticated/projects.$projectId'
+import { Route as AuthenticatedStudentsIndexRouteImport } from './routes/_authenticated/students.index'
+import { Route as AuthenticatedStudentsStudentIdRouteImport } from './routes/_authenticated/students.$studentId'
 import { Route as AuthenticatedWorkspaceEngagementIdRouteImport } from './routes/_authenticated/workspace.$engagementId'
 import { Route as AuthenticatedCompanyProjectsProjectIdRouteImport } from './routes/_authenticated/company.projects.$projectId'
 
@@ -52,11 +56,23 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNotificationsRoute =
+  AuthenticatedNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCompaniesIndexRoute =
+  AuthenticatedCompaniesIndexRouteImport.update({
+    id: '/companies/',
+    path: '/companies/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedCompanyIndexRoute =
   AuthenticatedCompanyIndexRouteImport.update({
     id: '/company/',
@@ -73,6 +89,18 @@ const AuthenticatedProjectsProjectIdRoute =
   AuthenticatedProjectsProjectIdRouteImport.update({
     id: '/projects/$projectId',
     path: '/projects/$projectId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedStudentsIndexRoute =
+  AuthenticatedStudentsIndexRouteImport.update({
+    id: '/students/',
+    path: '/students/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedStudentsStudentIdRoute =
+  AuthenticatedStudentsStudentIdRouteImport.update({
+    id: '/students/$studentId',
+    path: '/students/$studentId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedWorkspaceEngagementIdRoute =
@@ -94,11 +122,15 @@ export interface FileRoutesByFullPath {
   '/applications': typeof AuthenticatedApplicationsRoute
   '/bookmarks': typeof AuthenticatedBookmarksRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
+  '/students/$studentId': typeof AuthenticatedStudentsStudentIdRoute
   '/workspace/$engagementId': typeof AuthenticatedWorkspaceEngagementIdRoute
+  '/companies/': typeof AuthenticatedCompaniesIndexRoute
   '/company/': typeof AuthenticatedCompanyIndexRoute
   '/projects/': typeof AuthenticatedProjectsIndexRoute
+  '/students/': typeof AuthenticatedStudentsIndexRoute
   '/company/projects/$projectId': typeof AuthenticatedCompanyProjectsProjectIdRoute
 }
 export interface FileRoutesByTo {
@@ -107,11 +139,15 @@ export interface FileRoutesByTo {
   '/applications': typeof AuthenticatedApplicationsRoute
   '/bookmarks': typeof AuthenticatedBookmarksRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
+  '/students/$studentId': typeof AuthenticatedStudentsStudentIdRoute
   '/workspace/$engagementId': typeof AuthenticatedWorkspaceEngagementIdRoute
+  '/companies': typeof AuthenticatedCompaniesIndexRoute
   '/company': typeof AuthenticatedCompanyIndexRoute
   '/projects': typeof AuthenticatedProjectsIndexRoute
+  '/students': typeof AuthenticatedStudentsIndexRoute
   '/company/projects/$projectId': typeof AuthenticatedCompanyProjectsProjectIdRoute
 }
 export interface FileRoutesById {
@@ -122,11 +158,15 @@ export interface FileRoutesById {
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
   '/_authenticated/bookmarks': typeof AuthenticatedBookmarksRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
+  '/_authenticated/students/$studentId': typeof AuthenticatedStudentsStudentIdRoute
   '/_authenticated/workspace/$engagementId': typeof AuthenticatedWorkspaceEngagementIdRoute
+  '/_authenticated/companies/': typeof AuthenticatedCompaniesIndexRoute
   '/_authenticated/company/': typeof AuthenticatedCompanyIndexRoute
   '/_authenticated/projects/': typeof AuthenticatedProjectsIndexRoute
+  '/_authenticated/students/': typeof AuthenticatedStudentsIndexRoute
   '/_authenticated/company/projects/$projectId': typeof AuthenticatedCompanyProjectsProjectIdRoute
 }
 export interface FileRouteTypes {
@@ -137,11 +177,15 @@ export interface FileRouteTypes {
     | '/applications'
     | '/bookmarks'
     | '/dashboard'
+    | '/notifications'
     | '/profile'
     | '/projects/$projectId'
+    | '/students/$studentId'
     | '/workspace/$engagementId'
+    | '/companies/'
     | '/company/'
     | '/projects/'
+    | '/students/'
     | '/company/projects/$projectId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -150,11 +194,15 @@ export interface FileRouteTypes {
     | '/applications'
     | '/bookmarks'
     | '/dashboard'
+    | '/notifications'
     | '/profile'
     | '/projects/$projectId'
+    | '/students/$studentId'
     | '/workspace/$engagementId'
+    | '/companies'
     | '/company'
     | '/projects'
+    | '/students'
     | '/company/projects/$projectId'
   id:
     | '__root__'
@@ -164,11 +212,15 @@ export interface FileRouteTypes {
     | '/_authenticated/applications'
     | '/_authenticated/bookmarks'
     | '/_authenticated/dashboard'
+    | '/_authenticated/notifications'
     | '/_authenticated/profile'
     | '/_authenticated/projects/$projectId'
+    | '/_authenticated/students/$studentId'
     | '/_authenticated/workspace/$engagementId'
+    | '/_authenticated/companies/'
     | '/_authenticated/company/'
     | '/_authenticated/projects/'
+    | '/_authenticated/students/'
     | '/_authenticated/company/projects/$projectId'
   fileRoutesById: FileRoutesById
 }
@@ -222,11 +274,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/companies/': {
+      id: '/_authenticated/companies/'
+      path: '/companies'
+      fullPath: '/companies/'
+      preLoaderRoute: typeof AuthenticatedCompaniesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/company/': {
@@ -250,6 +316,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectsProjectIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/students/': {
+      id: '/_authenticated/students/'
+      path: '/students'
+      fullPath: '/students/'
+      preLoaderRoute: typeof AuthenticatedStudentsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/students/$studentId': {
+      id: '/_authenticated/students/$studentId'
+      path: '/students/$studentId'
+      fullPath: '/students/$studentId'
+      preLoaderRoute: typeof AuthenticatedStudentsStudentIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/workspace/$engagementId': {
       id: '/_authenticated/workspace/$engagementId'
       path: '/workspace/$engagementId'
@@ -271,11 +351,15 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
   AuthenticatedBookmarksRoute: typeof AuthenticatedBookmarksRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedProjectsProjectIdRoute: typeof AuthenticatedProjectsProjectIdRoute
+  AuthenticatedStudentsStudentIdRoute: typeof AuthenticatedStudentsStudentIdRoute
   AuthenticatedWorkspaceEngagementIdRoute: typeof AuthenticatedWorkspaceEngagementIdRoute
+  AuthenticatedCompaniesIndexRoute: typeof AuthenticatedCompaniesIndexRoute
   AuthenticatedCompanyIndexRoute: typeof AuthenticatedCompanyIndexRoute
   AuthenticatedProjectsIndexRoute: typeof AuthenticatedProjectsIndexRoute
+  AuthenticatedStudentsIndexRoute: typeof AuthenticatedStudentsIndexRoute
   AuthenticatedCompanyProjectsProjectIdRoute: typeof AuthenticatedCompanyProjectsProjectIdRoute
 }
 
@@ -283,12 +367,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
   AuthenticatedBookmarksRoute: AuthenticatedBookmarksRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedProjectsProjectIdRoute: AuthenticatedProjectsProjectIdRoute,
+  AuthenticatedStudentsStudentIdRoute: AuthenticatedStudentsStudentIdRoute,
   AuthenticatedWorkspaceEngagementIdRoute:
     AuthenticatedWorkspaceEngagementIdRoute,
+  AuthenticatedCompaniesIndexRoute: AuthenticatedCompaniesIndexRoute,
   AuthenticatedCompanyIndexRoute: AuthenticatedCompanyIndexRoute,
   AuthenticatedProjectsIndexRoute: AuthenticatedProjectsIndexRoute,
+  AuthenticatedStudentsIndexRoute: AuthenticatedStudentsIndexRoute,
   AuthenticatedCompanyProjectsProjectIdRoute:
     AuthenticatedCompanyProjectsProjectIdRoute,
 }

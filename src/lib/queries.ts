@@ -19,6 +19,9 @@ export type FeedFilters = {
   search?: string;
   category?: string;
   difficulty?: string;
+  skill?: string;
+  duration?: string;
+  status?: string;
 };
 
 async function attachProfiles<T extends { student_id: string }>(rows: T[]) {
@@ -29,6 +32,12 @@ async function attachProfiles<T extends { student_id: string }>(rows: T[]) {
   return new Map((data ?? []).map((p) => [p.id, p as Profile]));
 }
 
+export const DURATION_BUCKETS = [
+  { value: "short", label: "Up to 6 weeks", max: 6 },
+  { value: "medium", label: "6–12 weeks", min: 6, max: 12 },
+  { value: "long", label: "12+ weeks", min: 12 },
+] as const;
+
 export const projectsFeedQuery = (filters: FeedFilters = {}) =>
   queryOptions({
     queryKey: ["projects", "feed", filters],
@@ -36,8 +45,13 @@ export const projectsFeedQuery = (filters: FeedFilters = {}) =>
       let query = supabase
         .from("projects")
         .select("*, company:companies(*)")
-        .in("status", ["open", "paused"])
         .order("created_at", { ascending: false });
+
+      if (filters.status && filters.status !== "all") {
+        query = query.eq("status", filters.status as Project["status"]);
+      } else {
+        query = query.in("status", ["open", "paused", "completed"]);
+      }
 
       if (filters.search?.trim()) {
         const term = `%${filters.search.trim()}%`;
@@ -48,6 +62,14 @@ export const projectsFeedQuery = (filters: FeedFilters = {}) =>
       }
       if (filters.difficulty && filters.difficulty !== "all") {
         query = query.eq("difficulty", filters.difficulty);
+      }
+      if (filters.skill?.trim()) {
+        query = query.contains("skills", [filters.skill.trim()]);
+      }
+      const bucket = DURATION_BUCKETS.find((b) => b.value === filters.duration);
+      if (bucket) {
+        if ("min" in bucket && bucket.min) query = query.gte("duration_weeks", bucket.min);
+        if ("max" in bucket && bucket.max) query = query.lte("duration_weeks", bucket.max);
       }
 
       const { data, error } = await query;
