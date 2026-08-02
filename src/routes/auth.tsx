@@ -19,7 +19,6 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/lib/auth";
 
 const searchSchema = z.object({
@@ -118,24 +117,20 @@ function AuthPage() {
   }
 
   async function onGoogle() {
-    setGoogleLoading(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (result.error) {
-      setGoogleLoading(false);
-      const isLocal = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
-      toast.error(
-        isLocal
-          ? "Google sign-in is not available when running locally. Use email and password instead."
-          : "Google sign-in failed. Please try again.",
-      );
-      return;
-    }
-    if (result.redirected) return;
-    navigate({ to: "/dashboard", replace: true });
-  }
+  setGoogleLoading(true);
 
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${window.location.origin}/dashboard`,
+    },
+  });
+
+  if (error) {
+    setGoogleLoading(false);
+    toast.error(error.message);
+  }
+}
 
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
