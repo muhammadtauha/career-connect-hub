@@ -24,12 +24,13 @@ export const notificationsQuery = (userId: string, limit = 50) =>
 /** Notifications for the signed-in user, kept live through Lovable Cloud realtime. */
 export function useNotifications(userId: string | null, limit = 50) {
   const queryClient = useQueryClient();
+  const instanceId = useId();
   const query = useQuery({ ...notificationsQuery(userId ?? "", limit), enabled: Boolean(userId) });
 
   useEffect(() => {
     if (!userId) return;
     const channel = supabase
-      .channel(`notifications:${userId}`)
+      .channel(`notifications:${userId}:${instanceId}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "notifications", filter: `user_id=eq.${userId}` },
