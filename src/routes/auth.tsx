@@ -80,7 +80,15 @@ function AuthPage() {
   async function onSignIn(values: z.infer<typeof signInSchema>) {
     const { error } = await supabase.auth.signInWithPassword(values);
     if (error) {
-      toast.error(error.message);
+      if (error.message.toLowerCase().includes("email not confirmed")) {
+        toast.error("Confirm your email address before signing in.");
+      } else if (error.message.toLowerCase().includes("invalid login credentials")) {
+        toast.error(
+          "Invalid email or password. If you just signed up, make sure the account was confirmed.",
+        );
+      } else {
+        toast.error(error.message);
+      }
       return;
     }
     toast.success("Welcome back");
@@ -116,12 +124,18 @@ function AuthPage() {
     });
     if (result.error) {
       setGoogleLoading(false);
-      toast.error("Google sign-in failed. Please try again.");
+      const isLocal = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
+      toast.error(
+        isLocal
+          ? "Google sign-in is not available when running locally. Use email and password instead."
+          : "Google sign-in failed. Please try again.",
+      );
       return;
     }
     if (result.redirected) return;
     navigate({ to: "/dashboard", replace: true });
   }
+
 
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
