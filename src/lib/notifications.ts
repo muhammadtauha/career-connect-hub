@@ -43,7 +43,7 @@ export function useNotifications(userId: string | null, limit = 50) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [userId, queryClient]);
+  }, [userId, queryClient, instanceId]);
 
   const items = query.data ?? [];
   const unread = items.filter((n) => !n.read).length;
