@@ -310,6 +310,7 @@ export type Database = {
           phone: string | null
           portfolio: Json
           portfolio_url: string | null
+          primary_role: Database["public"]["Enums"]["app_role"]
           semester: number | null
           skills: string[]
           soft_skills: string[]
@@ -341,6 +342,7 @@ export type Database = {
           phone?: string | null
           portfolio?: Json
           portfolio_url?: string | null
+          primary_role?: Database["public"]["Enums"]["app_role"]
           semester?: number | null
           skills?: string[]
           soft_skills?: string[]
@@ -372,6 +374,7 @@ export type Database = {
           phone?: string | null
           portfolio?: Json
           portfolio_url?: string | null
+          primary_role?: Database["public"]["Enums"]["app_role"]
           semester?: number | null
           skills?: string[]
           soft_skills?: string[]
