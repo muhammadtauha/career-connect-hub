@@ -50,8 +50,8 @@ const STUDENT: NavItem[] = [
 const COMPANY: NavItem[] = [
   { to: "/company", label: "Company workspace", icon: Building2 },
   { to: "/students", label: "Student directory", icon: GraduationCap },
-  { to: "/profile", label: "Profile", icon: UserRound },
 ];
+
 
 const ADMIN: NavItem[] = [{ to: "/admin", label: "Admin panel", icon: Shield }];
 
@@ -125,10 +125,11 @@ function UserMenu() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link to="/profile">
+          <Link to={role === "company" ? "/company" : "/profile"}>
             <UserRound className="size-4" /> Profile
           </Link>
         </DropdownMenuItem>
+
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onSelect={async () => {
