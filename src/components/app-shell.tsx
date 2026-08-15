@@ -50,8 +50,8 @@ const STUDENT: NavItem[] = [
 const COMPANY: NavItem[] = [
   { to: "/company", label: "Company workspace", icon: Building2 },
   { to: "/students", label: "Student directory", icon: GraduationCap },
-  { to: "/profile", label: "Profile", icon: UserRound },
 ];
+
 
 const ADMIN: NavItem[] = [{ to: "/admin", label: "Admin panel", icon: Shield }];
 
