@@ -86,11 +86,12 @@ export const studentsQuery = (filters: StudentFilters = {}) =>
     queryKey: ["students", "directory", filters],
     queryFn: async (): Promise<Profile[]> => {
       let query = supabase
-        .from("profiles")
-        .select("*")
-        .eq("suspended", false)
-        .order("updated_at", { ascending: false })
-        .limit(60);
+    .from("profiles")
+    .select("*")
+    .eq("primary_role", "student")
+    .eq("suspended", false)
+    .order("updated_at", { ascending: false })
+    .limit(60);
 
       if (filters.search?.trim()) {
         const term = `%${filters.search.trim()}%`;
