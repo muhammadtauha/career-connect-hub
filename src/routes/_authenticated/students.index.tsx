@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AVAILABILITY, AVAILABILITY_LABELS, studentsQuery } from "@/lib/directory";
+import { stagger, tagTone } from "@/lib/visual";
 
 export const Route = createFileRoute("/_authenticated/students/")({
   head: () => ({
