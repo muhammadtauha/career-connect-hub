@@ -150,6 +150,7 @@ function FeedPage() {
                 role === "student" ? () => toggle.mutate(project.id) : undefined
               }
             />
+            </div>
           ))}
         </div>
       )}
