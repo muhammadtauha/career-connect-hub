@@ -55,7 +55,7 @@ function ApplicationsPage() {
       ) : (
         <ul className="space-y-3">
           {applications.data.map((application) => (
-            <li key={application.id} className="panel p-5">
+            <li key={application.id} className="panel card-interactive p-5">
               <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4">
                 <div className="min-w-0">
                   <p className="truncate text-[15px] font-medium">

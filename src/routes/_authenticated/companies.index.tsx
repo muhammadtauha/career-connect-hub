@@ -103,7 +103,7 @@ function CompaniesPage() {
               <Link
                 to="/companies/$companyId"
                 params={{ companyId: company.id }}
-                className="panel flex h-full items-start gap-3 p-4 transition-colors hover:border-primary/40"
+                className="panel card-interactive flex h-full items-start gap-3 p-4"
               >
                 <Avatar className="size-10 shrink-0 rounded-lg">
                   <AvatarImage src={company.logo_url ?? undefined} alt="" />
