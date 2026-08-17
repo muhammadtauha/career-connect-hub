@@ -113,12 +113,17 @@ function StudentsPage() {
         />
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2">
-          {students.data.map((student) => (
-            <li key={student.id}>
+          {students.data.map((student, index) => {
+            const incomplete =
+              !student.headline && (student.skills ?? []).length === 0;
+            return (
+            <li key={student.id} className="stagger-item" style={stagger(index)}>
               <Link
                 to="/students/$studentId"
                 params={{ studentId: student.id }}
-                className="panel flex h-full items-start gap-3 p-4 transition-colors hover:border-primary/40"
+                className={`panel card-interactive flex h-full items-start gap-3 p-4 ${
+                  incomplete ? "opacity-75 hover:opacity-100" : ""
+                }`}
               >
                 <Avatar className="size-10 shrink-0">
                   <AvatarImage src={student.avatar_url ?? undefined} alt="" />
@@ -127,26 +132,39 @@ function StudentsPage() {
                   </AvatarFallback>
                 </Avatar>
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium">
+                  <p
+                    className="truncate text-sm font-semibold"
+                    title={student.full_name || "Unnamed student"}
+                  >
                     {student.full_name || "Unnamed student"}
                   </p>
-                  <p className="truncate text-xs text-muted-foreground">
+                  <p
+                    className="truncate text-xs leading-tight text-muted-foreground/80"
+                    title={student.headline || student.university || "Student"}
+                  >
                     {student.headline || student.university || "Student"}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {(student.skills ?? []).slice(0, 4).map((s) => (
                       <span
                         key={s}
-                        className="rounded-full border border-border bg-elevated px-2 py-0.5 text-[11px] text-muted-foreground"
+                        title={s}
+                        className={`rounded-full border px-2 py-0.5 text-[11px] font-medium ${tagTone(s)}`}
                       >
                         {s}
                       </span>
                     ))}
+                    {incomplete ? (
+                      <span className="rounded-full border border-dashed border-border px-2 py-0.5 text-[11px] text-muted-foreground/70">
+                        Profile in progress
+                      </span>
+                    ) : null}
                   </div>
                 </div>
               </Link>
             </li>
-          ))}
+            );
+          })}
         </ul>
       )}
     </div>
