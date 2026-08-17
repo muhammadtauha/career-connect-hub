@@ -78,17 +78,23 @@ export function ProjectCard({
         {project.skills.slice(0, 5).map((skill) => (
           <span
             key={skill}
-            className="rounded-md border border-border bg-elevated px-2 py-0.5 text-xs text-muted-foreground"
+            title={skill}
+            className={`rounded-md border px-2 py-0.5 text-xs font-medium ${tagTone(skill)}`}
           >
             {skill}
           </span>
         ))}
         {project.skills.length > 5 ? (
-          <span className="text-xs text-muted-foreground">+{project.skills.length - 5}</span>
+          <span
+            className="text-xs text-muted-foreground"
+            title={project.skills.slice(5).join(", ")}
+          >
+            +{project.skills.length - 5}
+          </span>
         ) : null}
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1 text-xs leading-tight text-muted-foreground/80">
         <span className="inline-flex items-center gap-1.5">
           <Clock className="size-3.5" /> {project.duration_weeks} weeks
         </span>
