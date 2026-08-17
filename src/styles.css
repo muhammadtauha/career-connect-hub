@@ -166,3 +166,72 @@
 @utility text-balance-tight {
   text-wrap: balance;
 }
+
+/* ── Visual polish: hover, stagger, tags, filter bar ───────────────── */
+
+@utility card-interactive {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+  will-change: transform;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--primary) 38%, var(--border));
+    box-shadow:
+      0 1px 0 0 oklch(1 0 0 / 6%) inset,
+      0 18px 40px -16px oklch(0 0 0 / 80%),
+      0 0 0 1px color-mix(in oklab, var(--primary) 12%, transparent);
+  }
+}
+
+@utility filter-bar {
+  background-color: color-mix(in oklab, var(--elevated) 55%, var(--background));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 1px 0 0 oklch(1 0 0 / 4%) inset;
+  padding: 0.75rem;
+}
+
+@utility stagger-item {
+  opacity: 0;
+  animation: card-enter 380ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@utility count-pop {
+  animation: count-pop 260ms ease-out;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes count-pop {
+  from {
+    opacity: 0.4;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-item {
+    opacity: 1;
+    animation: none;
+  }
+  .card-interactive:hover {
+    transform: none;
+  }
+}
