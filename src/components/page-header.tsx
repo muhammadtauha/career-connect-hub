@@ -43,17 +43,20 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="panel flex flex-col items-center justify-center px-6 py-16 text-center">
+    <div className="panel stagger-item relative flex flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
+      <div className="halo pointer-events-none absolute inset-x-0 top-0 h-32 opacity-40" aria-hidden />
       {icon ? (
-        <div className="mb-4 grid size-11 place-items-center rounded-xl border border-border bg-elevated text-muted-foreground">
+        <div className="relative mb-4 grid size-12 place-items-center rounded-xl border border-border bg-elevated text-primary shadow-[0_0_0_6px_color-mix(in_oklab,var(--primary)_7%,transparent)]">
           {icon}
         </div>
       ) : null}
-      <h3 className="text-base font-medium">{title}</h3>
+      <h3 className="relative text-base font-semibold">{title}</h3>
       {description ? (
-        <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">{description}</p>
+        <p className="relative mt-1.5 max-w-sm text-sm leading-relaxed text-muted-foreground/85">
+          {description}
+        </p>
       ) : null}
-      {action ? <div className="mt-5">{action}</div> : null}
+      {action ? <div className="relative mt-5">{action}</div> : null}
     </div>
   );
 }
