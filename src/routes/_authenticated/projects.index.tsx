@@ -60,7 +60,7 @@ function FeedPage() {
         description="Live problems published by companies. Apply to the ones that match your skills."
       />
 
-      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="filter-bar grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         <Input
           value={search}
           onChange={(event) => setSearch(event.target.value)}
