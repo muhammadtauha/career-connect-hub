@@ -46,7 +46,7 @@ function CompaniesPage() {
         description="The organisations publishing projects on CareerCollab."
       />
 
-      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="filter-bar grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -103,7 +103,7 @@ function CompaniesPage() {
               <Link
                 to="/companies/$companyId"
                 params={{ companyId: company.id }}
-                className="panel flex h-full items-start gap-3 p-4 transition-colors hover:border-primary/40"
+                className="panel card-interactive flex h-full items-start gap-3 p-4"
               >
                 <Avatar className="size-10 shrink-0 rounded-lg">
                   <AvatarImage src={company.logo_url ?? undefined} alt="" />

@@ -16,7 +16,9 @@ import {
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
+import { CountUp } from "@/components/count-up";
 import { NotificationBell } from "@/components/notification-bell";
+import { statTone } from "@/lib/visual";
 import { Wordmark } from "@/components/wordmark";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -205,16 +207,25 @@ export function StatCard({
   hint?: string;
   icon?: typeof Briefcase;
 }) {
+  const tone = statTone(label);
   return (
-    <div className="panel p-4">
+    <div className="panel card-interactive stagger-item relative overflow-hidden p-4">
+      <span className={cn("absolute inset-y-0 left-0 w-[3px]", tone.bar)} aria-hidden />
       <div className="flex items-center justify-between gap-2">
-        <span className="truncate text-xs font-medium tracking-wide text-muted-foreground uppercase">
+        <span
+          className="truncate text-xs font-medium tracking-wide text-muted-foreground/90 uppercase"
+          title={label}
+        >
           {label}
         </span>
-        <Icon className="size-4 shrink-0 text-muted-foreground" />
+        <span className={cn("grid size-7 shrink-0 place-items-center rounded-md", tone.icon)}>
+          <Icon className="size-4" />
+        </span>
       </div>
-      <p className="mt-3 font-mono text-2xl">{value}</p>
-      {hint ? <p className="mt-1 text-xs text-muted-foreground">{hint}</p> : null}
+      <p className="count-pop mt-3 font-mono text-2xl font-semibold tabular-nums">
+        <CountUp value={value} />
+      </p>
+      {hint ? <p className="mt-1 text-xs text-muted-foreground/80">{hint}</p> : null}
     </div>
   );
 }

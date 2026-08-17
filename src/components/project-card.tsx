@@ -4,6 +4,7 @@ import { Bookmark, BookmarkCheck, Clock, MapPin, Users } from "lucide-react";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import type { ProjectWithCompany } from "@/lib/queries";
+import { tagTone } from "@/lib/visual";
 
 export function ProjectCard({
   project,
@@ -17,7 +18,7 @@ export function ProjectCard({
   bookmarkPending?: boolean;
 }) {
   return (
-    <article className="panel group relative flex flex-col gap-4 p-5 transition-colors hover:border-primary/40">
+    <article className="panel card-interactive group relative flex flex-col gap-4 p-5">
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
         <div className="min-w-0">
           <div className="flex min-w-0 items-center gap-2 text-xs text-muted-foreground">
@@ -35,7 +36,7 @@ export function ProjectCard({
             )}
             <span className="truncate">{project.company?.name ?? "Unknown company"}</span>
           </div>
-          <h3 className="mt-2 truncate text-[15px] font-medium">
+          <h3 className="mt-2 truncate text-[15px] font-semibold" title={project.title}>
             <Link
               to="/projects/$projectId"
               params={{ projectId: project.id }}
@@ -44,7 +45,12 @@ export function ProjectCard({
               {project.title}
             </Link>
           </h3>
-          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{project.summary}</p>
+          <p
+            className="mt-1 line-clamp-2 text-sm leading-relaxed text-muted-foreground/85"
+            title={project.summary ?? undefined}
+          >
+            {project.summary}
+          </p>
         </div>
         <div className="relative z-10 flex shrink-0 items-center gap-2">
           <StatusBadge status={project.status} />
@@ -72,17 +78,23 @@ export function ProjectCard({
         {project.skills.slice(0, 5).map((skill) => (
           <span
             key={skill}
-            className="rounded-md border border-border bg-elevated px-2 py-0.5 text-xs text-muted-foreground"
+            title={skill}
+            className={`rounded-md border px-2 py-0.5 text-xs font-medium ${tagTone(skill)}`}
           >
             {skill}
           </span>
         ))}
         {project.skills.length > 5 ? (
-          <span className="text-xs text-muted-foreground">+{project.skills.length - 5}</span>
+          <span
+            className="text-xs text-muted-foreground"
+            title={project.skills.slice(5).join(", ")}
+          >
+            +{project.skills.length - 5}
+          </span>
         ) : null}
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1 text-xs leading-tight text-muted-foreground/80">
         <span className="inline-flex items-center gap-1.5">
           <Clock className="size-3.5" /> {project.duration_weeks} weeks
         </span>

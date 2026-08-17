@@ -21,6 +21,7 @@ import {
   projectsFeedQuery,
 } from "@/lib/queries";
 import { useBookmarks } from "@/lib/use-bookmarks";
+import { stagger } from "@/lib/visual";
 
 export const Route = createFileRoute("/_authenticated/projects/")({
   head: () => ({
@@ -60,7 +61,7 @@ function FeedPage() {
         description="Live problems published by companies. Apply to the ones that match your skills."
       />
 
-      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="filter-bar grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         <Input
           value={search}
           onChange={(event) => setSearch(event.target.value)}
@@ -140,9 +141,9 @@ function FeedPage() {
         />
       ) : (
         <div className="grid gap-3">
-          {feed.data.map((project) => (
+          {feed.data.map((project, index) => (
+            <div key={project.id} className="stagger-item" style={stagger(index)}>
             <ProjectCard
-              key={project.id}
               project={project}
               bookmarked={bookmarkedIds.has(project.id)}
               bookmarkPending={toggle.isPending}
@@ -150,6 +151,7 @@ function FeedPage() {
                 role === "student" ? () => toggle.mutate(project.id) : undefined
               }
             />
+            </div>
           ))}
         </div>
       )}
