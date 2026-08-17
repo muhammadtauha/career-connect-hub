@@ -36,7 +36,7 @@ export function ProjectCard({
             )}
             <span className="truncate">{project.company?.name ?? "Unknown company"}</span>
           </div>
-          <h3 className="mt-2 truncate text-[15px] font-medium">
+          <h3 className="mt-2 truncate text-[15px] font-semibold" title={project.title}>
             <Link
               to="/projects/$projectId"
               params={{ projectId: project.id }}
@@ -45,7 +45,12 @@ export function ProjectCard({
               {project.title}
             </Link>
           </h3>
-          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{project.summary}</p>
+          <p
+            className="mt-1 line-clamp-2 text-sm leading-relaxed text-muted-foreground/85"
+            title={project.summary ?? undefined}
+          >
+            {project.summary}
+          </p>
         </div>
         <div className="relative z-10 flex shrink-0 items-center gap-2">
           <StatusBadge status={project.status} />
