@@ -16,7 +16,9 @@ import {
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
+import { CountUp } from "@/components/count-up";
 import { NotificationBell } from "@/components/notification-bell";
+import { statTone } from "@/lib/visual";
 import { Wordmark } from "@/components/wordmark";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
