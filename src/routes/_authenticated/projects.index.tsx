@@ -140,9 +140,9 @@ function FeedPage() {
         />
       ) : (
         <div className="grid gap-3">
-          {feed.data.map((project) => (
+          {feed.data.map((project, index) => (
+            <div key={project.id} className="stagger-item" style={stagger(index)}>
             <ProjectCard
-              key={project.id}
               project={project}
               bookmarked={bookmarkedIds.has(project.id)}
               bookmarkPending={toggle.isPending}
