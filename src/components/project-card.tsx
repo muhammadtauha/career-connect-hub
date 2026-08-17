@@ -4,6 +4,7 @@ import { Bookmark, BookmarkCheck, Clock, MapPin, Users } from "lucide-react";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import type { ProjectWithCompany } from "@/lib/queries";
+import { tagTone } from "@/lib/visual";
 
 export function ProjectCard({
   project,
@@ -17,7 +18,7 @@ export function ProjectCard({
   bookmarkPending?: boolean;
 }) {
   return (
-    <article className="panel group relative flex flex-col gap-4 p-5 transition-colors hover:border-primary/40">
+    <article className="panel card-interactive group relative flex flex-col gap-4 p-5">
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
         <div className="min-w-0">
           <div className="flex min-w-0 items-center gap-2 text-xs text-muted-foreground">
