@@ -21,6 +21,7 @@ import {
   projectsFeedQuery,
 } from "@/lib/queries";
 import { useBookmarks } from "@/lib/use-bookmarks";
+import { stagger } from "@/lib/visual";
 
 export const Route = createFileRoute("/_authenticated/projects/")({
   head: () => ({
